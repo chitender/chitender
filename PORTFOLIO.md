@@ -15,7 +15,7 @@ Pull requests run validation only. Deployment runs on pushes to `main` and manua
 ## Features
 
 - Interactive, animated reference architecture with four selectable layers.
-- Ten project summaries with expandable engineering stories and category filters.
+- 25 project summaries with searchable engineering stories, overlapping category filters, and progressive disclosure in groups of six.
 - Light/dark theme following device preference until explicitly selected.
 - Pause/resume animation; device reduced-motion preferences always take priority.
 - Native HTML content and case studies remain readable with JavaScript disabled.
@@ -51,12 +51,17 @@ Open `http://localhost:8000` for local viewing. Printing uses the browser's Prin
 
 ## Content decisions
 
-The original public README is the baseline for employment history and quantified results. Prior professional context adds the enterprise data-platform story; confirmed public repositories add learn-k8s and MacroCut. Conflicting older career histories, unsupported savings figures, future promotions, personal information unrelated to work, and employer-specific incident details were excluded.
+The original public README remains the baseline for career chronology. The user-supplied September 2026 Claude project handoff adds implementation details, attribution and delivery status. It is largely secondary evidence, not independent production verification. Current GitHub metadata determines which source links are public. Conflicting career histories, unsupported savings, future promotions, unrelated personal data and sensitive incident details are excluded.
 
 - The SRE-to-architect transition is shown at year granularity because the original README overlaps Jul–Sep 2024. Earlier roles retain the published dates, including the Jun–Jul 2019 overlap.
-- Aria uses a historical knowledge corpus; the site does not assert that retrieval data necessarily represents model fine-tuning.
+- Aria is historical/deprecated according to the new handoff. Its earlier speed and corpus-size claims are not repeated as achieved outcomes.
 - Karpenter is scoped to EKS; Cilium work spans EKS/AKS.
-- Egress performance is a scoped benchmark, not a generalized guarantee.
+- Egress performance is a single benchmark: (735 − 534) / 534 ≈ 37.6%. Test conditions are incomplete; no repeated or fleet-wide gain is implied.
+- The earlier 30% alert-reduction and zero-outage headline claims are removed pending verification. New alert-quality projections are not presented as outcomes.
+- TCMS and the tenant-routed OTel SDK are implemented but awaiting rollout/integration; HolmesGPT changes are unmerged; smoke tests are a proposal.
+- Hermes, SmartScheduler, the ESO fork and VulnForge were confirmed public through GitHub. KubeNightwatch, TaskOps, Cloud Viz Mapper and InfraBlaze are private; no source links to them are published.
+- AI-assisted work is attributed to architecture, specification, implementation review and integration where supported. Team work is not presented as sole authorship.
+- The attachment itself, internal identifiers, detailed incidents and confidential paths are not copied into the repository.
 - Personal prototypes and architecture work are labeled separately from professional implementations.
 - Internal projects have case studies without invented repository or demo links.
 

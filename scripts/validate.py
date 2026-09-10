@@ -53,8 +53,14 @@ page = Page()
 page.feed((SITE / "index.html").read_text())
 assert not page.stack, f"Unclosed tags: {page.stack}"
 assert page.h1s == 1, "Expected one primary heading"
-assert len(page.categories) == 10, "Expected ten project stories"
-assert set(page.categories) == page.filters - {"all"}, "Project filters do not match categories"
+assert len(page.categories) == 25, "Expected 25 project stories"
+assert {c for value in page.categories for c in value.split()} == page.filters - {"all"}, "Project filters do not match categories"
+# Keep public navigation out of known private repositories and internal endpoints.
+private_repos = {'kube-night-watch', 'tasks', 'cloud-viz-mapper', 'infrablaze'}
+for reference in page.references:
+    parsed = urlsplit(reference)
+    if parsed.netloc == 'github.com' and parsed.path.startswith('/chitender/'):
+        assert parsed.path.split('/')[2] not in private_repos, f"Private source linked publicly: {reference}"
 for reference in page.references:
     parsed = urlsplit(reference)
     assert parsed.scheme in {"", "https", "mailto"}, f"Unexpected URL scheme: {reference}"
