@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">Chitender Kumar — Senior Cloud Architect</title>
+  <desc id="desc">Architecture that holds up. Kubernetes, reliability and secure platforms. Animated accent underlines the heading.</desc>
+  <style>@keyframes travel{to{stroke-dashoffset:-280}}.signal{animation:travel 12s linear infinite}@media(prefers-reduced-motion:reduce){.signal{animation:none}}</style>
+  <rect width="1280" height="420" rx="14" fill="#202b23"/>
+  <text x="58" y="62" font-family="Arial,sans-serif" font-size="12" letter-spacing="3" fill="#d5e9a3">CHITENDER KUMAR / SENIOR CLOUD ARCHITECT</text>
+  <text x="54" y="164" font-family="Arial,sans-serif" font-size="72" font-weight="700" letter-spacing="-3" fill="#f4f3ec">Architecture</text>
+  <text x="56" y="250" font-family="Georgia,serif" font-size="78" font-style="italic" letter-spacing="-3" fill="#d5e9a3">that holds up.</text>
+  <path d="M60 287 H1220" stroke="#4e5a4b"/>
+  <path class="signal" d="M60 287 H1220" stroke="#d5e9a3" stroke-width="2" stroke-dasharray="35 245"/>
+  <text x="58" y="334" font-family="Arial,sans-serif" font-size="17" fill="#d2d9cb">Kubernetes · Reliability · Secure multi-tenant platforms</text>
+  <text x="58" y="376" font-family="Arial,sans-serif" font-size="11" letter-spacing="2" fill="#b5c1b0">DELHI, INDIA   /   AWS + AZURE   /   CKA</text>
+  <text x="1166" y="244" text-anchor="end" font-family="Arial,sans-serif" font-size="108" font-weight="700" letter-spacing="-9" fill="#f4f3ec">ck</text>
+  <circle cx="1189" cy="236" r="9" fill="#ee673a"/>
+</svg>
