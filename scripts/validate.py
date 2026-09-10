@@ -70,6 +70,9 @@ for reference in page.references:
         target = (SITE / unquote(parsed.path)).resolve()
         assert target.is_relative_to(SITE), f"Reference escapes publish directory: {reference}"
         assert target.is_file(), f"Missing asset: {reference}"
+        if target.suffix == '.svg' and parsed.fragment:
+            symbol_ids = {node.get('id') for node in ET.parse(target).iter()}
+            assert parsed.fragment in symbol_ids, f"Missing SVG symbol: {reference}"
     elif parsed.fragment:
         assert parsed.fragment in page.ids, f"Broken anchor: {reference}"
 
