@@ -60,19 +60,45 @@
 
   const filterButtons = [...document.querySelectorAll('[data-filter]')];
   const projects = [...document.querySelectorAll('.project')];
-  document.querySelector('.filters').hidden = false;
-  filterButtons.forEach((button) => button.addEventListener('click', () => {
-    const filter = button.dataset.filter;
-    filterButtons.forEach((other) => other.setAttribute('aria-pressed', String(other === button)));
-    let count = 0;
-    projects.forEach((project) => {
-      const visible = filter === 'all' || project.dataset.category === filter;
-      project.hidden = !visible;
+  const search = document.querySelector('#project-search');
+  const showMore = document.querySelector('#show-more');
+  const pageSize = 6;
+  let activeFilter = 'all';
+  let visibleLimit = pageSize;
+  const searchable = new Map(projects.map(project => [project, project.textContent.toLocaleLowerCase()]));
+  const renderProjects = () => {
+    const terms = search.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    const matches = projects.filter(project =>
+      (activeFilter === 'all' || project.dataset.category.split(' ').includes(activeFilter)) &&
+      terms.every(term => searchable.get(project).includes(term)));
+    const shown = new Set(matches.slice(0, visibleLimit));
+    projects.forEach(project => {
+      const wasHidden = project.hidden;
+      project.hidden = !shown.has(project);
       project.classList.remove('just-shown');
-      if (visible) { count += 1; project.classList.add('just-shown'); }
+      if (wasHidden && !project.hidden) project.classList.add('just-shown');
     });
-    document.querySelector('#filter-status').textContent = `${count} projects shown.`;
+    document.querySelector('#catalog-count').textContent = `Showing ${shown.size} of ${matches.length} projects.`;
+    document.querySelector('#empty-results').hidden = matches.length > 0;
+    showMore.hidden = visibleLimit >= matches.length;
+    filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === activeFilter)));
+  };
+  document.querySelector('.catalog-controls').hidden = false;
+  document.querySelector('.catalog-footer').hidden = false;
+  filterButtons.forEach(button => button.addEventListener('click', () => {
+    activeFilter = button.dataset.filter;
+    visibleLimit = pageSize;
+    renderProjects();
   }));
+  search.addEventListener('input', () => {
+    visibleLimit = pageSize;
+    renderProjects();
+  });
+  showMore.addEventListener('click', () => {
+    visibleLimit += pageSize;
+    renderProjects();
+  });
+  renderProjects();
 
   document.querySelectorAll('.print-button').forEach((button) => {
     button.hidden = false;
