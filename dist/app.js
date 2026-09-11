@@ -43,6 +43,27 @@
   });
   reducedMotion.addEventListener('change', applyMotion);
 
+  const canTrackPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  document.addEventListener('pointermove', (event) => {
+    if (!canTrackPointer.matches || root.dataset.motion === 'paused') return;
+    root.style.setProperty('--pointer-x', `${event.clientX}px`);
+    root.style.setProperty('--pointer-y', `${event.clientY}px`);
+  }, { passive: true });
+
+  const panel = document.querySelector('.system-panel');
+  panel.addEventListener('pointermove', (event) => {
+    if (!canTrackPointer.matches || root.dataset.motion === 'paused') return;
+    const rect = panel.getBoundingClientRect();
+    const rotateX = ((event.clientY - rect.top) / rect.height - .5) * -3;
+    const rotateY = ((event.clientX - rect.left) / rect.width - .5) * 3;
+    panel.style.setProperty('--tilt-x', `${rotateX.toFixed(2)}deg`);
+    panel.style.setProperty('--tilt-y', `${rotateY.toFixed(2)}deg`);
+  }, { passive: true });
+  panel.addEventListener('pointerleave', () => {
+    panel.style.setProperty('--tilt-x', '0deg');
+    panel.style.setProperty('--tilt-y', '0deg');
+  });
+
   const layers = {
     edge: ['01 / SECURE EDGE', 'Connection without unnecessary exposure.', 'Private connectivity, controlled egress and network policy define how workloads reach services across cloud and tenant boundaries.'],
     control: ['02 / CONTROL PLANE', 'Guardrails that scale with teams.', 'Identity, GitOps and policy establish a consistent operating model across shared and dedicated environments.'],
