@@ -16,8 +16,10 @@ function setup({ preferences = {}, dark = false, reduced = false, storageBlocked
     const classes = new Set((attrs.class || '').split(' '));
     const element = {
       attrs, classes, dataset: {}, hidden: 'hidden' in attrs, textContent: '', value: '', listeners: {},
+      style: { values: {}, setProperty(key, value) { this.values[key] = value; } },
       setAttribute(key, value) { this.attrs[key] = value; },
       addEventListener(type, handler) { this.listeners[type] = handler; },
+      getBoundingClientRect() { return { top: 0, left: 0, width: 500, height: 600 }; },
       classList: { add(c) { classes.add(c); }, remove(c) { classes.delete(c); } },
       click() { return this.disabled ? undefined : this.listeners.click?.(); }
     };
@@ -32,15 +34,16 @@ function setup({ preferences = {}, dark = false, reduced = false, storageBlocked
     : selector.startsWith('[data-') ? selector.slice(1, -1) in e.attrs : false);
   const query = selector => { const e = queryAll(selector)[0]; assert.ok(e, `Markup contains ${selector}`); return e; };
   const media = value => ({ matches: value, handler: null, addEventListener(type, handler) { this.handler = handler; }, change(value) { this.matches = value; this.handler?.({ matches: value }); } });
-  const scheme = media(dark), motion = media(reduced), documentRoot = { dataset: {} };
+  const scheme = media(dark), motion = media(reduced), pointer = media(true);
+  const documentRoot = { dataset: {}, style: { values: {}, setProperty(key, value) { this.values[key] = value; } } };
   const state = { prints: 0, copied: null, preferences: { ...preferences } };
   const localStorage = {
     getItem(k) { if (storageBlocked) throw Error('blocked'); return state.preferences[k] ?? null; },
     setItem(k, v) { if (storageBlocked) throw Error('blocked'); state.preferences[k] = v; }
   };
   runInNewContext(script, {
-    document: { documentElement: documentRoot, querySelector: query, querySelectorAll: queryAll },
-    window: { matchMedia: q => q.includes('color-scheme') ? scheme : motion, isSecureContext: true, print: () => state.prints++ },
+    document: { documentElement: documentRoot, querySelector: query, querySelectorAll: queryAll, addEventListener() {} },
+    window: { matchMedia: q => q.includes('color-scheme') ? scheme : q.includes('reduced-motion') ? motion : pointer, isSecureContext: true, print: () => state.prints++ },
     localStorage,
     navigator: { clipboard: clipboard ? { writeText: async text => { if (clipboardFails) throw Error('denied'); state.copied = text; } } : undefined }
   });
