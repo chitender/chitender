@@ -14,7 +14,8 @@ Pull requests run validation only. Deployment runs on pushes to `main` and manua
 
 ## Features
 
-- Interactive, animated reference architecture with four selectable layers.
+- Interactive reference architecture with four selectable layers, traveling packets, resource icons, and selected-layer motion.
+- Locally bundled Lucide cloud, compute, container, storage, network, security, workflow and telemetry icons, plus hover effects and progressive scroll reveals. No icon CDN or animation dependency.
 - 25 project summaries with searchable engineering stories, overlapping category filters, and progressive disclosure in groups of six.
 - Light/dark theme following device preference until explicitly selected.
 - Pause/resume animation; device reduced-motion preferences always take priority.
@@ -66,3 +67,7 @@ The original public README remains the baseline for career chronology. The user-
 - Internal projects have case studies without invented repository or demo links.
 
 Keep website and README claims aligned when updating them. External links are navigation only, not promises about the current deployment status of a personal project.
+
+## Icon attribution
+
+Infrastructure pictograms are bundled from [Lucide](https://github.com/lucide-icons/lucide), with its ISC and applicable Feather MIT notices preserved in `dist/ICON-LICENSE.txt`. `dist/icons.svg` is an external SVG symbol sprite; the icons represent resource categories rather than vendor trademarks. All animation respects reduced motion and the portfolio motion toggle. Scroll reveals are a CSS progressive enhancement; unsupported browsers display the content normally.

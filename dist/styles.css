@@ -23,3 +23,51 @@
 .metric strong{font-size:clamp(38px,4.4vw,63px)}
 @media(max-width:600px){.catalog-footer{align-items:flex-start;flex-direction:column}.metric strong{font-size:clamp(28px,8.2vw,45px)}.metric strong span{font-size:18px}}
 @media print{.catalog-controls,.catalog-footer,.catalog-note,#empty-results{display:none!important}.project,.project[hidden]{display:flex!important}}
+
+/* Locally bundled Lucide resource pictograms; labels carry their meaning. */
+.infra-icon{display:block;width:24px;height:24px;flex-shrink:0;overflow:visible}
+.node-icon .infra-icon{width:23px;height:23px}
+.system-panel{isolation:isolate}
+.packet{fill:var(--highlight);stroke:none;pointer-events:none;animation:packet-down 3.8s linear infinite}
+.packet-two{animation-delay:-1.3s}.packet-three{animation-delay:-2.6s}
+@keyframes packet-down{0%{transform:translateY(0);opacity:0}15%,75%{opacity:1}100%{transform:translateY(47px);opacity:0}}
+.infra-resources{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:9px 0 23px}
+.resource-chip{display:flex;align-items:center;flex-direction:column;gap:8px;color:var(--panel-muted);font-size:8px;letter-spacing:.04em;text-align:center;min-width:0}
+.resource-icon{display:grid;place-items:center;width:43px;height:43px;border:1px solid #4e5a4b;border-radius:12px;background:#2c392c;color:var(--highlight);animation:resource-float 6s ease-in-out infinite}
+.resource-chip:nth-child(2) .resource-icon{animation-delay:-1.2s}.resource-chip:nth-child(3) .resource-icon{animation-delay:-2.4s}.resource-chip:nth-child(4) .resource-icon{animation-delay:-3.6s}.resource-chip:nth-child(5) .resource-icon{animation-delay:-4.8s}
+@keyframes resource-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.layer[aria-pressed=true]{box-shadow:0 0 0 3px #d5e9a318,0 8px 22px #0003}
+.layer[aria-pressed=true] .infra-icon{animation:resource-float 5s ease-in-out infinite}
+.layer:hover .node-icon,.layer:focus-visible .node-icon{color:#d5e9a3}
+.layer[aria-pressed=true]:not(:hover):not(:focus-visible) .node-icon{color:#202b23}
+.system-panel:has([data-layer="edge"][aria-pressed="true"]) .packet-one{fill:#ffad89}
+.system-panel:has([data-layer="data"][aria-pressed="true"]) .packet-two{fill:#ffad89}
+.system-panel:has([data-layer="observe"][aria-pressed="true"]) .packet-three{fill:#ffad89}
+.stack-icons{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:24px;margin:0;padding:0;flex:1;max-width:930px}
+.stack-icons li{display:flex;align-items:center;gap:10px;transition:transform .25s,color .25s;color:var(--ink)}
+.stack-icons li .infra-icon{color:var(--accent);width:23px;height:23px}
+.stack-strip .stack-icons span{font:600 clamp(12px,1.4vw,18px)/1.4 'Manrope',Arial,sans-serif;color:inherit;letter-spacing:-.03em;max-width:none}
+.stack-icons li:hover{transform:translateY(-3px);color:var(--accent)}
+.project-resource{display:grid;place-items:center;width:46px;height:46px;border:1px solid var(--line);border-radius:12px;margin-bottom:20px;background:var(--paper);color:var(--accent);transition:transform .3s,box-shadow .3s}
+.project:hover .project-resource,.project:focus-within .project-resource{transform:translateY(-4px) rotate(-5deg);box-shadow:0 7px 18px #0000000d}
+.project-mark>.infra-icon{width:65px;height:65px;transition:transform .35s}
+.project:hover .project-mark>.infra-icon,.project:focus-within .project-mark>.infra-icon{transform:translateY(-5px) rotate(-4deg)}
+.project-mark>span{font:500 9px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:.1em}
+.button>span,.project-links a{transition:transform .25s}
+.button:hover>span,.button:focus-visible>span{transform:translate(2px,-2px)}
+.project-links a:hover{transform:translateX(3px)}
+.hero-copy h1{animation:hero-arrive .75s ease-out both}
+.hero-description{animation:hero-arrive .75s .1s ease-out both}
+.hero-copy .actions{animation:hero-arrive .75s .2s ease-out both}
+@keyframes hero-arrive{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+/* Content stays visible unless the browser supports scroll-driven animation. */
+@supports (animation-timeline:view()){
+  .section-heading{animation:section-arrive linear both;animation-timeline:view();animation-range:entry 0% entry 75%}
+  @keyframes section-arrive{from{opacity:.55;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+}
+@media(max-width:1000px){.stack-icons{gap:16px;flex-wrap:wrap;justify-content:flex-start}.stack-icons li{gap:7px}}
+@media(max-width:600px){.stack-icons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 20px}.stack-strip .stack-icons span{font-size:13px;margin:0}.stack-icons li:last-child{grid-column:1/-1}.resource-icon{width:37px;height:37px;border-radius:10px}.resource-icon .infra-icon{width:21px;height:21px}.resource-chip{font-size:7px}.infra-resources{gap:4px;padding-bottom:21px}}
+/* Later rules deliberately cover every newly added animation and pseudo-element. */
+:root[data-motion=paused] *,:root[data-motion=paused] *::before,:root[data-motion=paused] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media print{*,*::before,*::after{animation:none!important;transition:none!important}.project-resource,.infra-resources{display:none!important}.section-heading,.hero-copy h1,.hero-description,.hero-copy .actions{opacity:1;transform:none}}
