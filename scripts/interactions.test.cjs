@@ -114,22 +114,22 @@ test('every architecture layer updates its accessible explanation', () => {
   assert.equal(titles.size, 4);
 });
 
-test('system theme follows changes until an explicit selection is saved', () => {
-  const f = setup({ dark: true });
+test('dark-first theme ignores system changes until an explicit selection is saved', () => {
+  const f = setup({ dark: false });
   assert.equal(f.root.dataset.theme, 'dark');
   f.scheme.change(false);
-  assert.equal(f.root.dataset.theme, 'light');
+  assert.equal(f.root.dataset.theme, 'dark');
   f.query('#theme').click();
-  assert.equal(f.state.preferences['ck-theme'], 'dark');
-  f.scheme.change(false);
-  assert.equal(f.root.dataset.theme, 'dark');
+  assert.equal(f.state.preferences['ck-theme'], 'light');
+  f.scheme.change(true);
+  assert.equal(f.root.dataset.theme, 'light');
 });
 
 test('blocked preference storage does not break any interaction', () => {
   const f = setup({ storageBlocked: true });
   f.query('#theme').click();
   f.query('#motion').click();
-  assert.equal(f.root.dataset.theme, 'dark');
+  assert.equal(f.root.dataset.theme, 'light');
   assert.equal(f.root.dataset.motion, 'paused');
   f.queryAll('[data-filter]')[3].click();
   assert.equal(f.queryAll('.project').filter(p => !p.hidden).length, 6);

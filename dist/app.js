@@ -12,7 +12,7 @@
     document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#161d19' : '#f4f3ec';
   };
   const storedTheme = readPreference('ck-theme');
-  applyTheme(['light', 'dark'].includes(storedTheme) ? storedTheme : systemTheme.matches ? 'dark' : 'light');
+  applyTheme(['light', 'dark'].includes(storedTheme) ? storedTheme : 'dark');
   themeButton.hidden = false;
   themeButton.addEventListener('click', () => {
     const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -20,7 +20,7 @@
     savePreference('ck-theme', next);
   });
   systemTheme.addEventListener('change', (event) => {
-    if (!['light', 'dark'].includes(readPreference('ck-theme'))) applyTheme(event.matches ? 'dark' : 'light');
+    if (!['light', 'dark'].includes(readPreference('ck-theme'))) applyTheme('dark');
   });
 
   const motionButton = document.querySelector('#motion');
