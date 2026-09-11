@@ -86,4 +86,8 @@ for reference in re.findall(r'(?:href|src)="([^"]+)"|\]\(([^)]+)\)', readme):
     if not parsed.scheme and not parsed.netloc and parsed.path:
         assert (ROOT / parsed.path).is_file(), f"Broken README reference: {url}"
 
+styles = (SITE / "styles.css").read_text()
+assert ".metric strong,.metric strong span{background:none!important" in styles, "Metrics need a solid-color fallback"
+assert "-webkit-text-fill-color:var(--electric)!important" in styles, "Metric text fill must remain visible"
+
 print(f"PASS: HTML nesting, unique IDs, {len(page.categories)} projects, filters, local assets, anchors, SVGs and README references.")
